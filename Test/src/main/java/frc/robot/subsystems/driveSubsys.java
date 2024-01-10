@@ -4,20 +4,48 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class driveSubsys extends SubsystemBase {
+  TalonSRX FR = new TalonSRX(Constants.FrontR);
+  TalonSRX FL = new TalonSRX(Constants.FrontL);
+  TalonSRX BR = new TalonSRX(Constants.BackR);
+  TalonSRX BL = new TalonSRX(Constants.BackL);
   /** Creates a new driveSubsys. */
-  public driveSubsys() {}
+  public driveSubsys() {
+    FR.configFactoryDefault();
+    FL.configFactoryDefault();
+    BR.configFactoryDefault();
+    BL.configFactoryDefault();
+
+    FR.setNeutralMode(NeutralMode.Coast);
+    BR.setNeutralMode(NeutralMode.Coast);
+    FL.setNeutralMode(NeutralMode.Coast);
+    BL.setNeutralMode(NeutralMode.Coast);
+
+    BR.follow(FR);
+    BL.follow(FL);
+
+    FR.setInverted(InvertType.InvertMotorOutput);
+    BR.setInverted(InvertType.FollowMaster);
+
+  }
 
   /**
    * Example command factory method.
    *
    * @return a command
    */
- public void motorpower(){
-    
+ public void motorpower(double power, double turn){
+    FR.set(ControlMode.PercentOutput, power+turn);
+    FL.set(ControlMode.PercentOutput, power-turn);
  }
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).
