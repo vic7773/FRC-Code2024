@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.cameraserver.CameraServer; 
+import edu.wpi.first.cscore.CvSink;
+import org.opencv.core.Mat;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,6 +31,12 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     CameraServer.startAutomaticCapture();
+    CvSink cvsink = CameraServer.getVideo();
+    Mat image = new Mat();
+    cvsink.grabFrame(image);
+
+
+    AprilTagDetection[] april_tag_detection_array = AprilTagDetector.detect(image)
     m_robotContainer = new RobotContainer();
   }
 
