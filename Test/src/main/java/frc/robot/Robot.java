@@ -10,7 +10,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.cameraserver.CameraServer; 
 import edu.wpi.first.cscore.CvSink;
 import org.opencv.core.Mat;
-
+import java.lang.Math;
+import java.util.*;
+import edu.wpi.first.apriltag.AprilTagDetector;
+import edu.wpi.first.apriltag.AprilTagDetection;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -19,7 +22,7 @@ import org.opencv.core.Mat;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+  
   private RobotContainer m_robotContainer;
 
   /**
@@ -32,11 +35,15 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     CameraServer.startAutomaticCapture();
     CvSink cvsink = CameraServer.getVideo();
+    double fx = 4; // mm
+    double tagsize = 0;//6 inches we need to convert
+
+
     Mat image = new Mat();
     cvsink.grabFrame(image);
 
 
-    AprilTagDetection[] april_tag_detection_array = AprilTagDetector.detect(image)
+   // AprilTagDetection[] april_tag_detection_array = AprilTagDetector.detect(image);
     m_robotContainer = new RobotContainer();
   }
 
