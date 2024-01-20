@@ -25,10 +25,10 @@ public class driveSubsys extends SubsystemBase {
     BR.configFactoryDefault();
     BL.configFactoryDefault();
 
-    FR.setNeutralMode(NeutralMode.Coast);
-    BR.setNeutralMode(NeutralMode.Coast);
-    FL.setNeutralMode(NeutralMode.Coast);
-    BL.setNeutralMode(NeutralMode.Coast);
+    FR.setNeutralMode(NeutralMode.Brake);
+    BR.setNeutralMode(NeutralMode.Brake);
+    FL.setNeutralMode(NeutralMode.Brake);
+    BL.setNeutralMode(NeutralMode.Brake);
 
     BR.follow(FR);
     BL.follow(FL);
@@ -44,8 +44,8 @@ public class driveSubsys extends SubsystemBase {
    * @return a command
    */
  public void motorpower(double power, double turn){
-    FR.set(ControlMode.PercentOutput, power+turn);
-    FL.set(ControlMode.PercentOutput, power-turn);
+    FR.set(ControlMode.PercentOutput, power-turn);
+    FL.set(ControlMode.PercentOutput, power+turn);
  }
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).

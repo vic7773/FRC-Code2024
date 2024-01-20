@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import org.opencv.core.Mat;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -16,8 +18,9 @@ public final class Constants {
   public final static int driverPort = 0;
   public final static int operatorPort = 1;
 
-  public final static int FrontR = 0;
-  public final static int FrontL = 0;
-  public final static int BackR = 0;
-  public final static int BackL = 0;
+  public final static int FrontR = 1;
+  public final static int FrontL = 2;
+  public final static int BackR = 3;
+  public final static int BackL = 4;
+
 }
