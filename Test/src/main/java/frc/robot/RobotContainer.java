@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.otherInfo.controllerConstant;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveMod;
 
@@ -16,6 +17,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -31,30 +33,38 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final SwerveDrivetrain drivetrain = SwerveMod.train;
-  private final SwerveRequest.FieldCentric drivingRequest = new SwerveRequest.FieldCentric().withDeadband(SwerveMod.MaxSpeed
-  * 0.05)
-  .withRotationalDeadband(SwerveMod.MaxAngularSpeed * 0.05)
-  .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
-  .withSteerRequestType(SteerRequestType.MotionMagicExpo);
+  // private final SwerveRequest.FieldCentric drivingRequest = new SwerveRequest.FieldCentric().withDeadband(SwerveMod.MaxSpeed
+  // * 0.05)
+  // .withRotationalDeadband(SwerveMod.MaxAngularSpeed * 0.05)
+  // .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
+  // .withSteerRequestType(SteerRequestType.MotionMagicExpo);
 
-  private final XboxController driverController = new XboxController(0);
+  private final SwerveRequest.FieldCentric driveRequest = new SwerveRequest.FieldCentric()
+  .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
+  .withSteerRequestType(SteerRequestType.MotionMagic);
+  private final Joystick driverController = new Joystick(controllerConstant.DRIVER_PORT);
 
 
   public RobotContainer() {
     // Configure the trigger bindings
+
     configureBindings();
   }
 
+
  
   private void configureBindings() {
+        // drivetrain.setControl(
+        // drivingRequest.withVelocityX(0)
+        //     .withVelocityY(0)
+        //     .withRotationalRate(0));
+    drivetrain.setControl(driveRequest.withVelocityX(driverController.getRawAxis(controllerConstant.LEFT_STICK_X))
+    .withVelocityY(driverController.getRawAxis(controllerConstant.LEFT_STICK_Y))
+    .withRotationalRate(driverController.getRawAxis(controllerConstant.RIGHT_STICK_X)));
 
-    drivetrain.setControl(
-        drivingRequest.withVelocityX(driverController.getLeftY())
-            .withVelocityY(driverController.getLeftX())
-            .withRotationalRate(driverController.getRightX()));
 
   }
 
@@ -65,6 +75,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return Autos.exampleAuto(null);
   }
 }

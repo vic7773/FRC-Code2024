@@ -9,26 +9,33 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.ClosedLoopOutputType;
 
+import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.util.Units;
 
 public class SwerveMod {
-    private static final String CANbusName = "drivetrain";
+
+
+    private static final String CANbusName = "rio";
 /*
- * Might need to Change the Gains, Trackwidth, Wheelbase, IDs, and offset
+ * Might need to Change the Gains, IDs, and offset
+ * change track and wheel and Gearatios
  */
-    private static final double DriveMotorGR = 6.75;
-    private static final double SteerMotorGR = 15.43;
+private static final double trackWidth = 20.5;
+private static final double wheelbase = 25.752;
+
+    private static final double DriveMotorGR = 8.14;
+    private static final double SteerMotorGR = 12.8;
 
     private static final Slot0Configs SteerGain = new Slot0Configs()
-    .withKP(10)
+    .withKP(2)
     .withKI(0)
-    .withKD(0.2)
+    .withKD(0)
     .withKA(0)
-    .withKV(1.5)
+    .withKV(0)
     .withKS(0);
 
     private static final Slot0Configs DriveGain = new Slot0Configs()
-    .withKP(3)
+    .withKP(2)
     .withKI(0)
     .withKD(0)
     .withKA(0)
@@ -38,7 +45,7 @@ public class SwerveMod {
     private static final double WheelRad = 2;
 
     public static final double MaxSpeed = (6380/6.75* Math.PI * 4/12 / 60);
-    public static final double MaxAngularSpeed = 1.5*Math.PI;
+    public static final double MaxAngularSpeed = MaxSpeed/Math.hypot(trackWidth/2, wheelbase/2);
 
     private static final ClosedLoopOutputType SteerLoopOutput = ClosedLoopOutputType.Voltage;
 
@@ -63,27 +70,26 @@ public static final SwerveModuleConstantsFactory factorySettings = new SwerveMod
 .withSpeedAt12VoltsMps(MaxSpeed)
 .withSteerMotorInverted(false);     
 
-private static final double trackWidth = 20;
-private static final double wheelbase = 20;
 
-private static final int FRightDriveID = 10;
-private static final int FRightSteerID = 20;
-private static final int FRightSteerEncoderID = 30;
-private static final double FRightSteerOffset = 40;
 
-private static final int FLeftDriveID = 0;
-private static final int FLeftSteerID = 0;
-private static final int FLeftSteerEncoder = 0;
+private static final int FRightDriveID = 4;
+private static final int FRightSteerID = 5;
+private static final int FRightSteerEncoderID = 6;
+private static final double FRightSteerOffset = 0;
+
+private static final int FLeftDriveID = 1;
+private static final int FLeftSteerID = 2;
+private static final int FLeftSteerEncoder = 3;
 private static final double FLeftSteerOffset = 0;
 
-private static final int BRightDriveID = 0;
-private static final int BRightSteerId = 0;
-private static final int BRightSteerEncoder = 0;
+private static final int BRightDriveID = 10;
+private static final int BRightSteerId = 11;
+private static final int BRightSteerEncoder = 12;
 private static final double BRightSteerOffset = 0;
 
-private static final int BLeftDriveID = 0;
-private static final int BLeftSteerID = 0;
-private static final int BLeftSteerEncoderID = 0;
+private static final int BLeftDriveID = 7;
+private static final int BLeftSteerID = 8;
+private static final int BLeftSteerEncoderID = 9;
 private static final double BLeftSteerOffset = 0;
 
 
@@ -96,7 +102,7 @@ private static final SwerveModuleConstants FrontRight = factorySettings.createMo
     ,FRightSteerOffset
     ,Units.inchesToMeters(trackWidth/2)
     ,Units.inchesToMeters(-wheelbase/2)
-    ,false);
+    ,true);
   
 private static final SwerveModuleConstants FrontLeft = factorySettings.createModuleConstants(
     FLeftDriveID,
@@ -125,12 +131,16 @@ private static final SwerveModuleConstants BackRight = factorySettings.createMod
     ,BRightSteerOffset
     ,Units.inchesToMeters(-trackWidth/2)
     ,Units.inchesToMeters(-wheelbase/2)
-    ,false);
+    ,true);
 
 public static final SwerveDrivetrain train = new SwerveDrivetrain(DriveConstant
 , FrontLeft,
 FrontRight,
 BackLeft,
 BackRight);
+
+
+
+
 
 }
