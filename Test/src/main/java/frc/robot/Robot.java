@@ -14,6 +14,7 @@ import java.lang.Math;
 import java.util.*;
 import edu.wpi.first.apriltag.AprilTagDetector;
 import edu.wpi.first.apriltag.AprilTagDetection;
+import frc.robot.OpenC;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -45,6 +46,9 @@ public class Robot extends TimedRobot {
 
    // AprilTagDetection[] april_tag_detection_array = AprilTagDetector.detect(image);
     m_robotContainer = new RobotContainer();
+
+    OpenC open_c_object = new OpenC();
+    open_c_object.camera_calibrate(image);
   }
 
   /**
