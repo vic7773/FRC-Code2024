@@ -30,17 +30,17 @@ private static final double wheelbase = 25.752;
     .withKP(2)
     .withKI(0)
     .withKD(0)
-    .withKA(0)
-    .withKV(0)
-    .withKS(0);
+    .withKA(1)
+    .withKV(1)
+    .withKS(0.5);
 
     private static final Slot0Configs DriveGain = new Slot0Configs()
     .withKP(2)
     .withKI(0)
     .withKD(0)
-    .withKA(0)
-    .withKS(0)
-    .withKV(0);
+    .withKA(1)
+    .withKS(0.5)
+    .withKV(1);
 
     private static final double WheelRad = 2;
 
@@ -80,7 +80,7 @@ private static final double FRightSteerOffset = 0;
 private static final int FLeftDriveID = 1;
 private static final int FLeftSteerID = 2;
 private static final int FLeftSteerEncoder = 3;
-private static final double FLeftSteerOffset = 0;
+private static final double FLeftSteerOffset = -0.245;
 
 private static final int BRightDriveID = 10;
 private static final int BRightSteerId = 11;
@@ -90,7 +90,7 @@ private static final double BRightSteerOffset = 0;
 private static final int BLeftDriveID = 7;
 private static final int BLeftSteerID = 8;
 private static final int BLeftSteerEncoderID = 9;
-private static final double BLeftSteerOffset = 0;
+private static final double BLeftSteerOffset = -0.226;
 
 
 

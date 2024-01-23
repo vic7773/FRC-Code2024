@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.Timer;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -36,6 +37,7 @@ public class RobotContainer {
   //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final SwerveDrivetrain drivetrain = SwerveMod.train;
+  private final Timer time = new Timer();
   // private final SwerveRequest.FieldCentric drivingRequest = new SwerveRequest.FieldCentric().withDeadband(SwerveMod.MaxSpeed
   // * 0.05)
   // .withRotationalDeadband(SwerveMod.MaxAngularSpeed * 0.05)
@@ -43,9 +45,11 @@ public class RobotContainer {
   // .withSteerRequestType(SteerRequestType.MotionMagicExpo);
 
   private final SwerveRequest.FieldCentric driveRequest = new SwerveRequest.FieldCentric()
+  .withDeadband(SwerveMod.MaxSpeed*0.05)
+  .withRotationalRate(SwerveMod.MaxAngularSpeed*0.05)
   .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
   .withSteerRequestType(SteerRequestType.MotionMagic);
-  private final Joystick driverController = new Joystick(controllerConstant.DRIVER_PORT);
+  private CommandXboxController driverController = new CommandXboxController(1);
 
 
   public RobotContainer() {
@@ -57,14 +61,11 @@ public class RobotContainer {
 
  
   private void configureBindings() {
-        // drivetrain.setControl(
-        // drivingRequest.withVelocityX(0)
-        //     .withVelocityY(0)
-        //     .withRotationalRate(0));
-    drivetrain.setControl(driveRequest.withVelocityX(driverController.getRawAxis(controllerConstant.LEFT_STICK_X))
-    .withVelocityY(driverController.getRawAxis(controllerConstant.LEFT_STICK_Y))
-    .withRotationalRate(driverController.getRawAxis(controllerConstant.RIGHT_STICK_X)));
-
+    drivetrain.setControl(driveRequest.withVelocityX(driverController.getLeftX()*SwerveMod.MaxSpeed)
+    .withVelocityY(driverController.getLeftY()*SwerveMod.MaxSpeed)
+    .withRotationalRate(driverController.getRightX()*SwerveMod.MaxAngularSpeed));
+  
+  
 
   }
 
