@@ -18,9 +18,11 @@ public final class Constants {
   public final static int driverPort = 0;
   public final static int operatorPort = 1;
 
-  public final static int FrontR = 1;
-  public final static int FrontL = 2;
-  public final static int BackR = 3;
-  public final static int BackL = 4;
+  public final static int FrontR = 0;
+  public final static int FrontL = 0;
+  public final static int BackR = 0;
+  public final static int BackL = 0;
+
+  public final static int RandomMotor =  2;
 
 }

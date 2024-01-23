@@ -18,6 +18,11 @@ public class driveSubsys extends SubsystemBase {
   TalonSRX FL = new TalonSRX(Constants.FrontL);
   TalonSRX BR = new TalonSRX(Constants.BackR);
   TalonSRX BL = new TalonSRX(Constants.BackL);
+
+  
+
+
+  TalonSRX randMotor = new TalonSRX(Constants.RandomMotor);
   /** Creates a new driveSubsys. */
   public driveSubsys() {
     FR.configFactoryDefault();
@@ -36,6 +41,12 @@ public class driveSubsys extends SubsystemBase {
     FR.setInverted(InvertType.InvertMotorOutput);
     BR.setInverted(InvertType.FollowMaster);
 
+
+    
+    randMotor.configFactoryDefault();
+
+    randMotor.setNeutralMode(NeutralMode.Coast);
+
   }
 
   /**
@@ -43,6 +54,12 @@ public class driveSubsys extends SubsystemBase {
    *
    * @return a command
    */
+
+   
+ public void motormove(double power){
+  randMotor.set(ControlMode.PercentOutput, power);
+}
+
  public void motorpower(double power, double turn){
     FR.set(ControlMode.PercentOutput, power-turn);
     FL.set(ControlMode.PercentOutput, power+turn);

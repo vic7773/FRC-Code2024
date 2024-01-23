@@ -60,7 +60,8 @@ public class RobotContainer {
     driveSub.setDefaultCommand(new driveCommand(driveSub,
      () -> DriverContr.getRawAxis(controllerConstant.RIGHT_TRIGGER),
      () -> DriverContr.getRawAxis(controllerConstant.LEFT_TRIGGER),
-      () -> DriverContr.getRawAxis(controllerConstant.LEFT_STICK_X)));
+      () -> DriverContr.getRawAxis(controllerConstant.LEFT_STICK_X),
+      () -> DriverContr.getRawAxis(controllerConstant.RIGHT_STICK_Y)));
   }
 
   /**

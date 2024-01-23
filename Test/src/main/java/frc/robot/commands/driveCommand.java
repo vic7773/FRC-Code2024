@@ -17,18 +17,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class driveCommand extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final driveSubsys drive;
-  private final DoubleSupplier Fwd,Bck,turn;
+  private final DoubleSupplier Fwd,Bck,turn,move;
 
   /**
    * Creates a new driveCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public driveCommand(driveSubsys subsystem, DoubleSupplier Ftrig, DoubleSupplier Btrig, DoubleSupplier Jturn) {
+  public driveCommand(driveSubsys subsystem, DoubleSupplier Ftrig, DoubleSupplier Btrig, DoubleSupplier Jturn, DoubleSupplier move) {
     drive = subsystem;
     Fwd = Ftrig;
     Bck = Btrig;
     turn = Jturn;
+    this.move = move;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -42,6 +43,7 @@ public class driveCommand extends Command {
   @Override
   public void execute() {
     drive.motorpower(Fwd.getAsDouble() - Bck.getAsDouble(), turn.getAsDouble());
+    drive.motormove(move.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
