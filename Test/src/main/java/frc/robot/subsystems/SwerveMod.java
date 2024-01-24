@@ -105,8 +105,8 @@ private static final SwerveModuleConstants FrontRight = factorySettings.createMo
     ,true);
   
 private static final SwerveModuleConstants FrontLeft = factorySettings.createModuleConstants(
-    FLeftDriveID,
     FLeftSteerID,
+    FLeftDriveID,
     FLeftSteerEncoder,
     FLeftSteerOffset,
     Units.inchesToMeters(trackWidth/2),
@@ -115,8 +115,8 @@ private static final SwerveModuleConstants FrontLeft = factorySettings.createMod
 );
 
 private static final SwerveModuleConstants BackLeft = factorySettings.createModuleConstants(
-    BLeftDriveID,
     BLeftSteerID,
+    BLeftDriveID,
     BLeftSteerEncoderID,
     BLeftSteerOffset,
     Units.inchesToMeters(-trackWidth/2),

@@ -20,7 +20,6 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.Timer;
 /**
@@ -36,36 +35,34 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  private final SwerveDrivetrain drivetrain = SwerveMod.train;
-  private final Timer time = new Timer();
-  // private final SwerveRequest.FieldCentric drivingRequest = new SwerveRequest.FieldCentric().withDeadband(SwerveMod.MaxSpeed
-  // * 0.05)
-  // .withRotationalDeadband(SwerveMod.MaxAngularSpeed * 0.05)
-  // .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
-  // .withSteerRequestType(SteerRequestType.MotionMagicExpo);
+private final SwerveDrivetrain drivetrain = SwerveMod.train;
+private final SwerveRequest.FieldCentric request = new SwerveRequest.FieldCentric()
+.withDeadband(SwerveMod.MaxSpeed * 0.1)
+.withRotationalDeadband(SwerveMod.MaxAngularSpeed * 0.1)
+.withDriveRequestType(DriveRequestType.Velocity)
+.withSteerRequestType(SteerRequestType.MotionMagicExpo);
 
-  private final SwerveRequest.FieldCentric driveRequest = new SwerveRequest.FieldCentric()
-  .withDeadband(SwerveMod.MaxSpeed*0.05)
-  .withRotationalRate(SwerveMod.MaxAngularSpeed*0.05)
-  .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
-  .withSteerRequestType(SteerRequestType.MotionMagic);
-  private CommandXboxController driverController = new CommandXboxController(1);
+
+private final XboxController controller = new XboxController(0);
+
 
 
   public RobotContainer() {
     // Configure the trigger bindings
 
+    drivetrain.setControl(request.withVelocityX(controller.getLeftX())
+    .withVelocityY(controller.getLeftY())
+    .withRotationalRate(controller.getRightX()));
+
+
+
+
+
     configureBindings();
   }
 
 
- 
   private void configureBindings() {
-    drivetrain.setControl(driveRequest.withVelocityX(driverController.getLeftX()*SwerveMod.MaxSpeed)
-    .withVelocityY(driverController.getLeftY()*SwerveMod.MaxSpeed)
-    .withRotationalRate(driverController.getRightX()*SwerveMod.MaxAngularSpeed));
-  
-  
 
   }
 
