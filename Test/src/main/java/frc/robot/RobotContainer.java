@@ -35,24 +35,12 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-private final SwerveDrivetrain drivetrain = SwerveMod.train;
-private final SwerveRequest.FieldCentric request = new SwerveRequest.FieldCentric()
-.withDeadband(SwerveMod.MaxSpeed * 0.1)
-.withRotationalDeadband(SwerveMod.MaxAngularSpeed * 0.1)
-.withDriveRequestType(DriveRequestType.Velocity)
-.withSteerRequestType(SteerRequestType.MotionMagicExpo);
-
-
-private final XboxController controller = new XboxController(0);
 
 
 
   public RobotContainer() {
     // Configure the trigger bindings
 
-    drivetrain.setControl(request.withVelocityX(controller.getLeftX())
-    .withVelocityY(controller.getLeftY())
-    .withRotationalRate(controller.getRightX()));
 
 
 

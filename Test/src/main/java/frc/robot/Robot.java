@@ -4,9 +4,16 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.SwerveMod;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -16,6 +23,16 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private final SwerveDrivetrain drivetrain = SwerveMod.train;
+private final SwerveRequest.FieldCentric request = new SwerveRequest.FieldCentric()
+.withDeadband(SwerveMod.MaxSpeed * 0.1)
+.withRotationalDeadband(SwerveMod.MaxAngularSpeed * 0.1)
+.withDriveRequestType(DriveRequestType.Velocity)
+.withSteerRequestType(SteerRequestType.MotionMagicExpo);
+
+
+private XboxController controller = new XboxController(0);
+
 
   private RobotContainer m_robotContainer;
 
@@ -81,7 +98,12 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    System.out.println("This is running");
+    drivetrain.setControl(request.withVelocityX(controller.getLeftX())
+    .withVelocityY(controller.getLeftY())
+    .withRotationalRate(controller.getRightX()));
+  }
 
   @Override
   public void testInit() {
